@@ -127,14 +127,14 @@ const config = {
       template: './src/index.html',
       filename: './index.html',
     }),
-    new HtmlWebPackPlugin({
-      template: './src/cards.html',
-      filename: './cards.html'
-    }),
-    new HtmlWebPackPlugin({
-      template: './src/statistics.html',
-      filename: './statistics.html'
-    }),
+    // new HtmlWebPackPlugin({
+    //   template: './src/main.html',
+    //   filename: './main.html'
+    // }),
+    // new HtmlWebPackPlugin({
+    //   template: './src/statistics.html',
+    //   filename: './statistics.html'
+    // }),
     new CopyWebpackPlugin([
       {from: './src/static', to: './'},
       {from: './src/img', to: './img/'},

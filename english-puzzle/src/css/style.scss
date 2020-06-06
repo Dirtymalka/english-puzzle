@@ -1,1 +1,14 @@
-@import "../sass/components/atuthorization";
+/* Base */
+@import "../sass/base/base";
+
+/* Pages */
+@import "../sass/pages/atuthorization";
+@import "../sass/pages/start.scss";
+
+/* Layout */
+@import "../sass/layout/header";
+@import "../sass/layout/gameBoard";
+
+/*components*/
+@import "../sass/components/select";
+@import "../sass/components/buttons.scss";
