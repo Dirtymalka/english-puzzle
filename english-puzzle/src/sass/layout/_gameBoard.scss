@@ -5,14 +5,27 @@
   box-sizing: content-box;
   .speaker {
     background-image: url(/img/dynamic-icon.svg);
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     margin-bottom: 20px;
+    visibility: hidden;
+    &:hover {
+      cursor: pointer;
+      background-color: hsla(0,0%,100%,.39);
+      border-radius: 50%;
+    }
+    &.visible {
+      visibility: visible;
+    }
   }
   .sentence-text {
     margin-bottom: 30px;
     font-size: 2rem;
     font-weight: normal;
+    visibility: hidden;
+    &.visible {
+      visibility: visible;
+    }
   }
   .puzzle-container {
     border: 5px inset rgb(128, 119, 118);
@@ -25,6 +38,10 @@
       text-align: center;
       height: 40px;
       width: 100%;
+      &.active-string {
+        border-bottom: 1px solid #2c2929;
+        background: #e8cfb18f;
+      }
     }
   }
   .puzzle-pieces {
@@ -36,6 +53,10 @@
     border: 5px inset #9b8e8d;
     align-items: center;
   }
+  .option-btn-game {
+    display: flex;
+    justify-content: center;
+  }
 }
 
 .word {
@@ -46,5 +67,20 @@
   background: #6b7373;
   &:hover {
     cursor: pointer;
+  }
+  &.correct-word {
+    box-shadow: 0 0 1rem 0 rgba(64, 238, 11, 0.87);
+  }
+  &.un-correct-word {
+    box-shadow: 0 0 1rem 0 rgba(226,31,31,.87);
+  }
+}
+
+.btn-game {
+  display: none;
+  margin-right: 30px;
+  width: 170px;
+  &.show {
+    display: block;
   }
 }

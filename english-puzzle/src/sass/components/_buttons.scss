@@ -9,4 +9,9 @@
   color: white;
   cursor: pointer;
   transition: background 0.3s;
+  &:hover {
+    cursor: pointer;
+    background-color: rgb(255, 252, 241);
+    color: black;
+  }
 }

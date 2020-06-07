@@ -7,22 +7,38 @@ const addHandlersOnOptionMenu = () => {
   const optionList = document.querySelectorAll(".option-container__option");
 
 
-  selectboxDisplay.forEach((item) => {
-    item.addEventListener("click", (e) => {
-      e.stopPropagation();
-      e.target.closest('.selectbox').classList.toggle("selectbox--active");
-      item.classList.toggle("selectbox__display--active");
-    });
-  })
+  document.querySelector('.options-form').onclick = (event) => {
+    event.stopPropagation();
+    // console.log(event.target.closest('.selectbox'))
 
-
-
-  function shakeBox() {
-    selectbox.classList.add("selectbox--shake");
-    setTimeout(() => {
-      selectbox.classList.remove("selectbox--shake");
-    }, 300);
+    if (event.target.closest('.selectbox')) {
+      console.log('total')
+      if (event.target.closest('.selectbox').classList.contains('selectbox--active')) {
+        console.log('first');
+        event.target.closest('.selectbox').classList.remove('selectbox--active');
+        event.target.closest('.selectbox__displayWord').classList.remove("selectbox__display--active");
+        return;
+      }
+      document.querySelectorAll(".selectbox").forEach((item) => {
+        item.classList.remove("selectbox--active");
+      });
+      document.querySelectorAll(".selectbox__displayWord").forEach((item) => {
+        item.classList.remove('selectbox__display--active');
+      });
+      event.target.closest('.selectbox').classList.toggle("selectbox--active");
+      event.target.closest('.selectbox__displayWord').classList.toggle("selectbox__display--active");
+    }
   }
+
+
+  // selectboxDisplay.forEach((item) => {
+  //   item.addEventListener("click", (e) => {
+  //     e.stopPropagation();
+
+  //     e.target.closest('.selectbox').classList.toggle("selectbox--active");
+  //     e.target.closest('.selectbox__displayWord').classList.toggle("selectbox__display--active");
+  //   });
+  // })
 
   optionList.forEach((option, index) => {
     option.addEventListener("click", (e) => {
@@ -36,14 +52,26 @@ const addHandlersOnOptionMenu = () => {
     });
   });
 
-  submitbtn.addEventListener("click", () => {
-    if (selectbox.classList.contains("selectbox--unselect")) {
-      shakeBox();
-    }
-  });
+
+
+
+  // function shakeBox() {
+  //   selectbox.classList.add("selectbox--shake");
+  //   setTimeout(() => {
+  //     selectbox.classList.remove("selectbox--shake");
+  //   }, 300);
+  // }
+
+  // submitbtn.addEventListener("click", () => {
+  //   if (selectbox.classList.contains("selectbox--unselect")) {
+  //     shakeBox();
+  //   }
+  // });
 
   window.addEventListener("click", () => {
-    selectbox.classList.remove("selectbox--active");
+    document.querySelectorAll(".selectbox").forEach((item) => {
+      item.classList.remove("selectbox--active");
+    });
   });
 }
 

@@ -1,9 +1,9 @@
-import { createMainLayout } from '../main/createMainLayout';
+import { createHeaderLayout } from '../main/createHeader';
 import { addHandlersOnOptionMenu } from '../main/options';
 import { getWords } from '../main/puzzle';
 
 const btnStartHandler = async () => {
-  createMainLayout();
+  createHeaderLayout();
   addHandlersOnOptionMenu();
   getWords();
 }

@@ -1,19 +1,43 @@
-import book1 from '../data';
+import book1 from '../data/book1';
+import book2 from '../data/book2';
+import book3 from '../data/book3';
+import book4 from '../data/book4';
+import book5 from '../data/book5';
+import book6 from '../data/book6';
 import { createGameBoard } from './createGameBoard';
-import { addPuzzlesClickHandler } from './puzzlesClickHandler';
+// import { addPuzzlesClickHandler } from './puzzlesClickHandler';
+import { INDEX_FIRST_SENTENCE, LEVEL, PAGE } from '../constants';
+import { addButtonGameHandlers } from './buttonGamesHandlers';
 
 const getWords = () => {
+  document.querySelector('.main').innerHTML = '';
   const level = document.querySelector('.selectbox-levels').textContent;
   const page = document.querySelector('.selectbox-pages').textContent;
+  localStorage.setItem(LEVEL, level);
+  localStorage.setItem(PAGE, page);
+
+  const levelData = {
+    '1': book1,
+    '2': book2,
+    '3': book3,
+    '4': book4,
+    '5': book5,
+    '6': book6,
+  }
 
   // const url = `https://afternoon-falls-25894.herokuapp.com/words?page=${page}&group=${level}`;
-  const idWord = (book1.length * (parseFloat(level) - 1) + parseFloat(page) * 10) - 10;
+  // const idWord = (levelData[level].length * (parseFloat(level) - 1) + parseFloat(page) * 10) - 10;
 
-  const dataForOneGame = book1.slice(idWord, idWord + 10);
+  const idWord = (parseFloat(page) * 10) - 10;
+
+  const dataForOneGame = levelData[level].slice(idWord, idWord + 10);
   const filterDataForOneGame = dataForOneGame.map(dataFilter);
-  createGameBoard(filterDataForOneGame[0]);
+  console.log(filterDataForOneGame)
+  createGameBoard(filterDataForOneGame);
   // const filterDataForOneGame = dataFilter(dataForOneGame);
-  addPuzzlesClickHandler();
+  // addPuzzlesClickHandler(filterDataForOneGame);
+
+  addButtonGameHandlers(filterDataForOneGame);
 }
 
 

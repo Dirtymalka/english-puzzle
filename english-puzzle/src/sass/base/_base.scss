@@ -13,7 +13,8 @@ html {
 body{
 	margin:0;
 	color:#ffffff;
-  background:url(https://lh4.googleusercontent.com/-XplyTa1Za-I/VMSgIyAYkHI/AAAAAAAADxM/oL-rD6VP4ts/w1184-h666/Android-Lollipop-wallpapers-Google-Now-Wallpaper-2.png) no-repeat;
+  background:url(/img/background.png) no-repeat;
   background-size: cover;
-	font:600 16px/18px 'Roboto',sans-serif;
+  font:600 16px/18px 'Roboto',sans-serif;
+  user-select: none;
 }
