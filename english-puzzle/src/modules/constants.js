@@ -8,3 +8,11 @@ export const NUMBER_OF_SENTENCE = 'number of sentence';
 
 export const LEVEL = 'level';
 export const PAGE = 'page';
+
+export const PRONUNCIATION_CLASS = 'pronunciation-class';
+export const TRANSLATION_CLASS = 'translation-class';
+export const AUTO_PRONUNCIATION_CLASS = 'auto-pronunciation-class';
+export const PICTURE_CLASS = 'picture-class';
+export const ICON_CLASS_ACTIVE = 'active-icon';
+
+export const USER_NAME = 'user-name';

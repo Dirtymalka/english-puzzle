@@ -3,27 +3,53 @@ import '../css/style.scss';
 
 import { Authorization } from '../modules/autorization/authorization';
 import { btnSignUpHandler } from '../modules/autorization/registration';
-import { createAuthorizationLayout } from '../modules/autorization/createAuthorizationLayout';
+import { createAuthorizationLayout, createStartPage } from '../modules/autorization/createAuthorizationLayout';
 import { btnSignInHandler } from '../modules/autorization/authorization';
 
 import { btnStartHandler } from '../modules/autorization/start';
 
-
-btnStartHandler();
-
-// createAuthorizationLayout();
-
-// document.querySelector('.btn-sign-in').onclick = (e) => {
-//   e.preventDefault();
-//   btnSignInHandler();
-// }
-
-// document.querySelector('.btn-sign-up').onclick = (e) => {
-//   e.preventDefault();
-//   btnSignUpHandler();
-// }
+import { USER_ID, TOKEN } from '../modules/constants';
 
 
+
+
+
+const uSerId = localStorage.getItem(USER_ID);
+
+const init = () => {
+  if (uSerId) {
+    createStartPage();
+    return;
+  }
+
+  createAuthorizationLayout();
+
+document.querySelector('.btn-sign-in').onclick = (e) => {
+  e.preventDefault();
+  btnSignInHandler();
+}
+
+document.querySelector('.btn-sign-up').onclick = (e) => {
+  e.preventDefault();
+  btnSignUpHandler();
+}
+
+}
+
+init();
+
+
+
+
+
+
+
+
+
+
+
+
+// btnStartHandler();
 
 
 

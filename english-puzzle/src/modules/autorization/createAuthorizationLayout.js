@@ -21,15 +21,15 @@ const createAuthorizationLayout = () => {
                       <input id="pass-for-sign-in" type="password" class="input" data-type="password" placeholder="Your password" required>
                   </div>
                   <div class="group">
-                      <input id="check" type="checkbox" class="check" checked>
-                      <label for="check"><span class="icon"></span> Keep me Signed in</label>
-                  </div>
-                  <div class="group">
                       <input type="submit" class="button btn-sign-in" value="Sign In">
                   </div>
                   <div class="hr"></div>
               </div>
               <div class="sign-up-htm">
+                  <div class="group">
+					<label for="user-name" class="label">Username</label>
+					<input id="user-name" type="text" class="input" required>
+				</div>
                   <div class="group">
                       <label for="e-mail-for-sign-up" class="label">Email Address</label>
                       <input id="e-mail-for-sign-up" type="email" class="input" placeholder="E-mail" required>

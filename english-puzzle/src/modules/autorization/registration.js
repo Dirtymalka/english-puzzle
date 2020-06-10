@@ -23,10 +23,15 @@
 
 
 import { createStartPage } from './createAuthorizationLayout';
+import { loginUser } from './authorization';
+import { USER_NAME } from '../constants';
 
 const btnSignUpHandler = () => {
   const eMail = document.querySelector('#e-mail-for-sign-up').value;
   const password = document.querySelector('#pass-for-sign-up').value;
+  const userName = document.querySelector('#user-name').value;
+  localStorage.setItem(USER_NAME, userName);
+
 
   if (!eMail.match(/^[A-Za-z0-9._-]+@[A-Za-z0-9-]+.+.[A-Za-z]{2,4}$/)) {
     console.log('bad e-mail')
@@ -36,13 +41,10 @@ const btnSignUpHandler = () => {
     console.log('bad pass');
     return;
   }
-
-
   const user = {
     "email": eMail,
     "password": password
   }
-
   createUser(user);
 }
 
@@ -59,10 +61,9 @@ const createUser = async user => {
       },
       body: JSON.stringify(user)
     });
-    console.log(user);
     const content = await rawResponse.json();
 
-    createStartPage();
+    await loginUser(user);
 
     console.log(content);
   } catch (error) {

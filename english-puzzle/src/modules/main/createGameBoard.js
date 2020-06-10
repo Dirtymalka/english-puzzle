@@ -1,6 +1,7 @@
-import { WIDTH_OF_GAME_BOARD, INDEX_FIRST_SENTENCE, NUMBER_OF_SENTENCE } from '../constants';
+import { WIDTH_OF_GAME_BOARD, INDEX_FIRST_SENTENCE, NUMBER_OF_SENTENCE, PRONUNCIATION_CLASS, TRANSLATION_CLASS, AUTO_PRONUNCIATION_CLASS, PICTURE_CLASS, ICON_CLASS_ACTIVE } from '../constants';
 import { addPuzzlesClickHandler } from './puzzlesClickHandler';
-import { addButtonOptionHandlers } from './buttonOptionsHandlers';
+import { addButtonOptionHandlers, addButtonSpeakHandler } from './buttonOptionsHandlers';
+import { speakerHandler } from './speaker';
 
 const createGameBoard = (wordData) => {
   const firstSentence = wordData[INDEX_FIRST_SENTENCE];
@@ -8,8 +9,8 @@ const createGameBoard = (wordData) => {
   const sentenceText = firstSentence.textTranslate;
   const layout = `
   <div class="game-board-container">
-    <div class="speaker visible"></div>
-    <div class="sentence-text visible">${sentenceText}</div>
+    <div class="speaker"></div>
+    <div class="sentence-text">${sentenceText}</div>
     <div class="puzzle-container">
       <div id="part-1" class="puzzle-container_sentence active-string"></div>
       <div id="part-2" class="puzzle-container_sentence"></div>
@@ -31,27 +32,82 @@ const createGameBoard = (wordData) => {
     </div>
   </div>`;
   document.querySelector('.main').insertAdjacentHTML('afterbegin', layout);
-  createPuzzles(wordData, INDEX_FIRST_SENTENCE);
+  mixPuzzlesAndAppend(createPuzzles(wordData, INDEX_FIRST_SENTENCE));
   addButtonOptionHandlers();
+  addButtonSpeakHandler(wordData);
+
+  // document.querySelector('.speaker').click();
+}
+
+const addHints = () => {
+  if (localStorage.getItem(PRONUNCIATION_CLASS) === ICON_CLASS_ACTIVE) {
+    document.querySelector('.speaker').classList.add('visible');
+    document.querySelector('.pronunciation-icon').classList.add('active-icon');
+  } else {
+    document.querySelector('.speaker').classList.remove('visible');
+  }
+  if (localStorage.getItem(TRANSLATION_CLASS) === ICON_CLASS_ACTIVE) {
+    document.querySelector('.sentence-text').classList.add('visible');
+    document.querySelector('.translation-icon').classList.add('active-icon');
+  } else {
+    document.querySelector('.sentence-text').classList.remove('visible');
+  }
+  if (localStorage.getItem(PICTURE_CLASS) === ICON_CLASS_ACTIVE) {
+    document.querySelector('.picture-icon').classList.add(ICON_CLASS_ACTIVE);
+    document.querySelectorAll('.word').forEach((word) => {
+      word.classList.remove('not-image');
+    })
+  }
 }
 
 const createPuzzles = (data, index) => {
+  console.log('data for create:', data)
   localStorage.setItem(NUMBER_OF_SENTENCE, index);
+  const { audioText } = data[index];
   const puzzles = data[index].text.split(' ');
-  const mixPuzzles = mixWords(puzzles);
   const letterWidth = WIDTH_OF_GAME_BOARD / puzzles.join('').length;
-  mixPuzzles.forEach((word) => {
-    const wordElement = createPuzzleElement(word, letterWidth);
-    document.querySelector('.puzzle-pieces').append(wordElement);
+  const elementPuzzles = [];
+  puzzles.forEach((word) => {
+    const wordElement = createPuzzleElement(word, letterWidth, elementPuzzles);
+    const wordElementWithBackground = addBackgroundForElements(wordElement, letterWidth, elementPuzzles)
+    elementPuzzles.push(wordElementWithBackground);
   });
-  addPuzzlesClickHandler(data);
+  console.log(elementPuzzles)
+  document.querySelector('.sentence-text').textContent = data[index].textTranslate;
+
+  if (localStorage.getItem(AUTO_PRONUNCIATION_CLASS) === ICON_CLASS_ACTIVE) {
+    document.querySelector('.auto-pronunciation-icon').classList.add('active-icon');
+    setTimeout(() => speakerHandler(audioText), 500)
+  }
+
+  return elementPuzzles;
+}
+
+const mixPuzzlesAndAppend = (puzzles) => {
+  const mixPuzzles = mixWords(puzzles);
+  document.querySelector('.puzzle-pieces').append(...mixPuzzles);
+  addPuzzlesClickHandler();
+  addHints();
 }
 
 const createPuzzleElement = (word, letterWidth) => {
   const wordElement = document.createElement('div');
-  wordElement.className = 'word';
+  wordElement.className = 'word not-image';
   wordElement.textContent = word;
   wordElement.style.width = `${word.length * letterWidth}px`;
+
+  return wordElement;
+}
+
+const addBackgroundForElements = (wordElement, letterWidth, elements) => {
+  const numberOfSentence = localStorage.getItem(NUMBER_OF_SENTENCE);
+  const heightOfString = getComputedStyle(document.querySelector('.puzzle-pieces')).height;
+  const coordY = `${parseFloat(heightOfString) * parseFloat(numberOfSentence)}px`;
+  const coordX = elements.reduce((sum, item) => sum + parseFloat(item.style.width), 0);
+  wordElement.style.backgroundImage = 'linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(/img/бурлаки.jpg)';
+  wordElement.style.backgroundPosition = `-${coordX}px -${coordY}`;
+  wordElement.style.backgroundSize = '860px 400px';
+  wordElement.style.backgroundRepeat = 'no-repeat';
   return wordElement;
 }
 
@@ -71,4 +127,4 @@ const randomInteger = (min, max) => {
   return Math.round(rand);
 }
 
-export { createGameBoard, createPuzzleElement, createPuzzles, mixWords, randomInteger };
+export { createGameBoard, createPuzzleElement, createPuzzles, mixWords, randomInteger, mixPuzzlesAndAppend };

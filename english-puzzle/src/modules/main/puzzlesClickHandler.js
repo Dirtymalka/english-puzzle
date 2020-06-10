@@ -23,6 +23,8 @@ const addPuzzlesClickHandler = (data) => {
       const shiftY = event.clientY - puzzle.getBoundingClientRect().top;
 
       const clone = movingWord.cloneNode();
+      clone.style.background = '';
+
       clone.className = 'clone';
       clone.style.width = itemWidth;
       clone.style.height = itemHeight;

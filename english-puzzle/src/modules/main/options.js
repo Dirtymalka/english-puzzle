@@ -42,13 +42,17 @@ const addHandlersOnOptionMenu = () => {
 
   optionList.forEach((option, index) => {
     option.addEventListener("click", (e) => {
-      e.stopPropagation();
-      // console.log(document.querySelector('.selectbox__display--active').innerHTML)
-      const label = option.querySelector("label");
-      document.querySelector('.selectbox__display--active').innerHTML = label.innerHTML;
-      document.querySelector('.selectbox--active').setAttribute("data-option", label.getAttribute("data-value"));
-      document.querySelector('.selectbox--active').classList.remove("selectbox--active", "selectbox--unselect");
-      document.querySelector('.selectbox__display--active').classList.remove("selectbox__display--active");
+      try {
+        e.stopPropagation();
+        // console.log(document.querySelector('.selectbox__display--active').innerHTML)
+        const label = option.querySelector("label");
+        document.querySelector('.selectbox__display--active').innerHTML = label.innerHTML;
+        document.querySelector('.selectbox--active').setAttribute("data-option", label.getAttribute("data-value"));
+        document.querySelector('.selectbox--active').classList.remove("selectbox--active", "selectbox--unselect");
+        document.querySelector('.selectbox__display--active').classList.remove("selectbox__display--active");
+      } catch (error) {
+        return;
+      }
     });
   });
 

@@ -32,6 +32,7 @@
     width: 860px;
     height: 400px;
     margin-bottom: 40px;
+    box-sizing: content-box;
     .puzzle-container_sentence {
       display: flex;
       justify-content: start;
@@ -45,6 +46,7 @@
     }
   }
   .puzzle-pieces {
+    box-sizing: content-box;
     display: flex;
     width: 860px;
     justify-content: start;
@@ -60,11 +62,15 @@
 }
 
 .word {
-  border: 2px inset #8d8585;
+  border: 1px inset #8d8585;
   height: 40px;
   line-height: 2;
   text-align: center;
-  background: #6b7373;
+  // background: #6b7373;
+  font-size: 2rem;
+  &.not-image {
+    background: #6b7373 !important;
+  }
   &:hover {
     cursor: pointer;
   }

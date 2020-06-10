@@ -32,11 +32,9 @@ const getWords = () => {
 
   const dataForOneGame = levelData[level].slice(idWord, idWord + 10);
   const filterDataForOneGame = dataForOneGame.map(dataFilter);
-  console.log(filterDataForOneGame)
   createGameBoard(filterDataForOneGame);
   // const filterDataForOneGame = dataFilter(dataForOneGame);
   // addPuzzlesClickHandler(filterDataForOneGame);
-
   addButtonGameHandlers(filterDataForOneGame);
 }
 

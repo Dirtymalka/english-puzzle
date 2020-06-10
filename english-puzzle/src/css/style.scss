@@ -6,9 +6,11 @@
 @import "../sass/pages/start.scss";
 
 /* Layout */
-@import "../sass/layout/header";
+@import "../sass/layout/settings";
 @import "../sass/layout/gameBoard";
+@import "../sass/layout/header";
 
 /*components*/
 @import "../sass/components/select";
 @import "../sass/components/buttons.scss";
+@import "../sass/components/tooltip";
