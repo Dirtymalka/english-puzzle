@@ -1,7 +1,7 @@
 import { USER_NAME } from '../constants';
 
 const createHeader = () => {
-  const userName = localStorage.getItem(USER_NAME)[0];
+  const userName = localStorage.getItem(USER_NAME) ? localStorage.getItem(USER_NAME)[0] : 'U';
   const headerLayout = `
         <header class="header">
             <div class="title">english puzzle</div>

@@ -1,4 +1,6 @@
 import { btnStartHandler } from './start';
+import { btnSignInHandler } from './authorization';
+import { btnSignUpHandler } from './registration';
 
 const createAuthorizationLayout = () => {
     const appContainer = document.querySelector('.app-container');
@@ -48,6 +50,17 @@ const createAuthorizationLayout = () => {
   </div>
 </div>`;
     appContainer.insertAdjacentHTML('afterbegin', content);
+
+    document.querySelector('.btn-sign-in').onclick = (e) => {
+        e.preventDefault();
+        btnSignInHandler();
+      }
+
+      document.querySelector('.btn-sign-up').onclick = (e) => {
+        e.preventDefault();
+        btnSignUpHandler();
+      }
+
 }
 
 const createStartPage = () => {

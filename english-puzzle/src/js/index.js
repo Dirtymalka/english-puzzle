@@ -24,15 +24,7 @@ const init = () => {
 
   createAuthorizationLayout();
 
-document.querySelector('.btn-sign-in').onclick = (e) => {
-  e.preventDefault();
-  btnSignInHandler();
-}
 
-document.querySelector('.btn-sign-up').onclick = (e) => {
-  e.preventDefault();
-  btnSignUpHandler();
-}
 
 }
 

@@ -15,6 +15,8 @@ const createSettingsLayout = () => {
   const level = localStorage.getItem(LEVEL) || 1;
   const page = localStorage.getItem(PAGE) || 1;
 
+
+
   createHeader();
   const content = `<div id="mainPage">
   <div class="settings">

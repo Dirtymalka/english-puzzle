@@ -3,6 +3,8 @@ import { createPuzzleElement, createPuzzles, mixWords, randomInteger, mixPuzzles
 import { getWords } from './puzzle';
 import { speakerHandler } from './speaker';
 
+import USER from '../dataUser';
+
 const btnCheckHandler = (data) => {
   const completedSentence = Array.from(document.querySelectorAll('.completed')).map((word) => word.textContent);
   const numberOfSentence = localStorage.getItem(NUMBER_OF_SENTENCE);
@@ -54,7 +56,6 @@ const btnDontKnowHandler = (data) => {
 
   const puzzles = createPuzzles(data, numberOfSentence);
   puzzles.forEach((word) => {
-    // const wordElement = createPuzzleElement(word, letterWidth);
     word.classList.add('correct-word');
     word.classList.remove('not-image');
     word.classList.add('done');
@@ -63,27 +64,16 @@ const btnDontKnowHandler = (data) => {
 
   if (!document.querySelector('.sentence-text').classList.contains('visible')) {
     document.querySelector('.sentence-text').classList.add('visible');
-    // document.querySelector('.translation-icon').click();
   }
 
   if (!document.querySelector('.speaker').classList.contains('visible')) {
     document.querySelector('.speaker').classList.add('visible');
-    // document.querySelector('.pronunciation-icon').click();
   }
 
   if (!document.querySelector('.auto-pronunciation-icon').classList.contains('active-icon')) {
     speakerHandler(data[numberOfSentence].audioText);
-    // document.querySelector('.pronunciation-icon').click();
   }
 
-  //
-  // document.querySelector('.speaker').click();
-
-  // checkSentence.forEach((word) => {
-  //   const wordElement = createPuzzleElement(word, letterWidth);
-  //   wordElement.classList.add('correct-word');
-  //   document.querySelector(`#part-${parseFloat(numberOfSentence) + 1}`).append(wordElement);
-  // });
   document.querySelector('.puzzle-pieces').innerHTML = '';
   document.querySelector('.btn-check').classList.remove('show');
   document.querySelector('.btn-not-know').classList.remove('show');
@@ -116,9 +106,11 @@ const btnContinueHandler = (data) => {
     return;
   }
 
+  const pageNow = parseFloat(localStorage.getItem(PAGE));
+  const levelNow = parseFloat(localStorage.getItem(LEVEL));
+
   if (document.querySelector('.puzzle-container').classList.contains('complited-puzzle')) {
-    const pageNow = parseFloat(localStorage.getItem(PAGE));
-    const levelNow = parseFloat(localStorage.getItem(LEVEL));
+
 
     document.querySelector('.puzzle-container').classList.remove('complited-puzzle');
     document.querySelector('.btn-result').classList.remove('show');
@@ -148,6 +140,9 @@ const btnContinueHandler = (data) => {
     });
     document.querySelector('.puzzle-container').classList.add('complited-puzzle');
     document.querySelector('.btn-result').classList.add('show');
+    USER.complete.push({ level: levelNow, page: pageNow });
+    USER.statistics.push( { time: new Date(), level: levelNow, page: pageNow } )
+    console.log(USER)
   }
 
 }

@@ -3,13 +3,18 @@ import { NUMBER_OF_SENTENCE, WIDTH_OF_GAME_BOARD, ICON_CLASS, ICON_CLASS_ACTIVE,
 import { speakerHandler } from './speaker';
 import { getWords } from './puzzle';
 
+import USER from '../dataUser';
+
 const btnPronunciationHandler = () => {
   document.querySelector('.pronunciation-icon').classList.toggle('active-icon');
   if (document.querySelector('.pronunciation-icon').classList.contains('active-icon')) {
     document.querySelector('.speaker').classList.add('visible');
+    USER.settings.pronunciation = 'active-icon';
   } else {
     document.querySelector('.speaker').classList.remove('visible');
+    USER.settings.pronunciation = '';
   }
+  console.log(USER)
   setOptionsToLocalStorage('pronunciation');
 }
 
@@ -17,8 +22,10 @@ const btnTranslationHandler = () => {
   document.querySelector('.translation-icon').classList.toggle('active-icon');
   if (document.querySelector('.translation-icon').classList.contains('active-icon')) {
     document.querySelector('.sentence-text').classList.add('visible');
+    USER.settings.translation = 'active-icon';
   } else {
     document.querySelector('.sentence-text').classList.remove('visible');
+    USER.settings.translation = '';
   }
 
   setOptionsToLocalStorage('translation');

@@ -1,6 +1,8 @@
 import { createStartPage } from './createAuthorizationLayout';
 import { TOKEN, USER_ID } from '../constants';
 
+import USER from '../dataUser';
+
 const btnSignInHandler = () => {
   const eMail = document.querySelector('#e-mail-for-sign-in').value;
   const password = document.querySelector('#pass-for-sign-in').value;
@@ -35,6 +37,8 @@ const loginUser = async user => {
 
   localStorage.setItem(TOKEN, token);
   localStorage.setItem(USER_ID, userId);
+
+  USER.id = userId;
 };
 
 export { btnSignInHandler, loginUser };
