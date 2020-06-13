@@ -1,23 +1,16 @@
-import { LEVEL, PAGE, PRONUNCIATION_CLASS, TRANSLATION_CLASS, AUTO_PRONUNCIATION_CLASS, PICTURE_CLASS, ICON_CLASS_ACTIVE } from '../constants';
 import { addButtonSelectHandler } from './buttonOptionsHandlers';
 import { addTooltipHandler } from './tooltip';
 import { createHeader } from './createHeader';
-import { addLogOutHandler } from './logOut';
+import { addHandlersOnOptionMenu } from './options';
+import { activeUser } from '../authorization/authorization';
 
-const createSettingsLayout = () => {
-  // localStorage.setItem(PRONUNCIATION_CLASS, ICON_CLASS_ACTIVE);
-  // localStorage.setItem(TRANSLATION_CLASS, ICON_CLASS_ACTIVE);
-  // localStorage.setItem(AUTO_PRONUNCIATION_CLASS, ICON_CLASS_ACTIVE);
-
-
-  const appContainer = document.querySelector('.app-container');
+const createSettingsLayout = () => {const appContainer = document.querySelector('.app-container');
   document.querySelector('.app-container').innerHTML = '';
-  const level = localStorage.getItem(LEVEL) || 1;
-  const page = localStorage.getItem(PAGE) || 1;
-
-
+  const level = activeUser.lastLevel;
+  const page = activeUser.lastPage;
 
   createHeader();
+
   const content = `<div id="mainPage">
   <div class="settings">
     <div class="settings__options">
@@ -55,7 +48,7 @@ const createSettingsLayout = () => {
   addButtonSelectHandler();
   addTooltipHandler();
   addStartOptions();
-  addLogOutHandler();
+  addHandlersOnOptionMenu();
 }
 
 const createLevels = () => {
@@ -85,18 +78,10 @@ const createPages = () => {
 }
 
 const addStartOptions = () => {
-  if (!localStorage.getItem(PRONUNCIATION_CLASS)) {
-    localStorage.setItem(PRONUNCIATION_CLASS, ICON_CLASS_ACTIVE);
-    document.querySelector('.pronunciation-icon').classList.add('active-icon');
-  }
-  if (!localStorage.getItem(TRANSLATION_CLASS)) {
-    localStorage.setItem(TRANSLATION_CLASS, ICON_CLASS_ACTIVE);
-    document.querySelector('.translation-icon').classList.add('active-icon');
-  }
-  if (!localStorage.getItem(AUTO_PRONUNCIATION_CLASS)) {
-    localStorage.setItem(AUTO_PRONUNCIATION_CLASS, ICON_CLASS_ACTIVE);
-    document.querySelector('.auto-pronunciation-icon').classList.add('active-icon');
-  }
+  document.querySelector('.pronunciation-icon').classList.add(activeUser.settings.pronunciation);
+  document.querySelector('.translation-icon').classList.add(activeUser.settings.translation);
+  document.querySelector('.auto-pronunciation-icon').classList.add(activeUser.settings.autoPronunciation);
+  // document.querySelector('.picture-icon').classList.add(activeUser.settings.picture);
 }
 
 export { createSettingsLayout };

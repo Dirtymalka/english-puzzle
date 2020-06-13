@@ -3,10 +3,14 @@ import { createPuzzleElement, createPuzzles, mixWords, randomInteger, mixPuzzles
 import { getWords } from './puzzle';
 import { speakerHandler } from './speaker';
 
-import USER from '../dataUser';
+// import USER from '../dataUser';
+import resultSentences from '../statistics/dataStatistics'
+import { createRoundStatisticLayout } from '../statistics/roundStatistic';
+
+import { activeUser } from '../authorization/authorization';
+
 
 const btnCheckHandler = (data) => {
-  const completedSentence = Array.from(document.querySelectorAll('.completed')).map((word) => word.textContent);
   const numberOfSentence = localStorage.getItem(NUMBER_OF_SENTENCE);
   const checkSentence = data[numberOfSentence].text.split(' ');
   document.querySelectorAll('.completed').forEach((word) => {
@@ -28,21 +32,21 @@ const btnCheckHandler = (data) => {
 
     if (!document.querySelector('.sentence-text').classList.contains('visible')) {
       document.querySelector('.sentence-text').classList.add('visible');
-      // document.querySelector('.translation-icon').click();
     }
 
     if (!document.querySelector('.speaker').classList.contains('visible')) {
       document.querySelector('.speaker').classList.add('visible');
-      // document.querySelector('.pronunciation-icon').click();
     }
 
     speakerHandler(data[numberOfSentence].audioText);
-    // document.querySelector('.speaker').click();
 
     document.querySelectorAll('.correct-word').forEach((word) => {
       word.style.zIndex = '-1';
       word.classList.remove('not-image');
     });
+
+    resultSentences.know.push({ sentence: Array.from(document.querySelectorAll('.correct-word')).map((word) => word.textContent).join(' '), speaker: data[numberOfSentence].audioText });
+    console.log(resultSentences)
   } else {
     document.querySelector('.btn-not-know').classList.add('show');
   }
@@ -50,8 +54,6 @@ const btnCheckHandler = (data) => {
 
 const btnDontKnowHandler = (data) => {
   const numberOfSentence = localStorage.getItem(NUMBER_OF_SENTENCE);
-  const checkSentence = data[numberOfSentence].text.split(' ');
-  const letterWidth = WIDTH_OF_GAME_BOARD / checkSentence.join('').length;
   document.querySelector(`#part-${parseFloat(numberOfSentence) + 1}`).innerHTML = '';
 
   const puzzles = createPuzzles(data, numberOfSentence);
@@ -61,6 +63,8 @@ const btnDontKnowHandler = (data) => {
     word.classList.add('done');
     document.querySelector(`#part-${parseFloat(numberOfSentence) + 1}`).append(word);
   });
+
+  resultSentences.dontKnow.push({ sentence: Array.from(document.querySelectorAll('.correct-word')).map((word) => word.textContent).join(' '), speaker: data[numberOfSentence].audioText });
 
   if (!document.querySelector('.sentence-text').classList.contains('visible')) {
     document.querySelector('.sentence-text').classList.add('visible');
@@ -80,8 +84,8 @@ const btnDontKnowHandler = (data) => {
   document.querySelector('.btn-continue').classList.add('show');
 }
 
+
 const btnContinueHandler = (data) => {
-  console.log(data)
   const numberOfSentence = localStorage.getItem(NUMBER_OF_SENTENCE);
 
   if (parseFloat(numberOfSentence) + 1 < 10) {
@@ -102,19 +106,16 @@ const btnContinueHandler = (data) => {
 
     document.querySelector('.btn-continue').classList.remove('show');
     document.querySelector('.btn-not-know').classList.add('show');
-
     return;
   }
 
-  const pageNow = parseFloat(localStorage.getItem(PAGE));
-  const levelNow = parseFloat(localStorage.getItem(LEVEL));
+  const pageNow = parseFloat(activeUser.lastPage);
+  const levelNow = parseFloat(activeUser.lastLevel);
 
   if (document.querySelector('.puzzle-container').classList.contains('complited-puzzle')) {
 
-
     document.querySelector('.puzzle-container').classList.remove('complited-puzzle');
     document.querySelector('.btn-result').classList.remove('show');
-
 
     if (levelNow === 6 && pageNow === 60) {
       return;
@@ -122,15 +123,18 @@ const btnContinueHandler = (data) => {
 
     if (pageNow < 60) {
       document.querySelector('.selectbox-pages').textContent = pageNow + 1;
+      activeUser.lastPage = pageNow + 1;
     } else {
       document.querySelector('.selectbox-levels').textContent = levelNow + 1;
       document.querySelector('.selectbox-pages').textContent = 1;
+      activeUser.lastPage = 1;
+      activeUser.lastLevel = levelNow + 1;
     }
 
+    activeUser.imageIndex = activeUser.imageIndex < 150 ? activeUser.imageIndex + 1 : 1;
     getWords();
     return;
   }
-
 
   if (parseFloat(numberOfSentence) + 1 === 10) {
     document.querySelectorAll('.word').forEach((word) => {
@@ -140,11 +144,46 @@ const btnContinueHandler = (data) => {
     });
     document.querySelector('.puzzle-container').classList.add('complited-puzzle');
     document.querySelector('.btn-result').classList.add('show');
-    USER.complete.push({ level: levelNow, page: pageNow });
-    USER.statistics.push( { time: new Date(), level: levelNow, page: pageNow } )
-    console.log(USER)
+    addStatisticsData(pageNow, levelNow);
+  }
+}
+
+const addStatisticsData = (page, level) => {
+  const options = {
+    day: 'numeric',
+    month: 'long',
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric',
+    hour12: false
+  };
+  const date = new Date();
+  const dateString = date.toLocaleString('en', options);
+
+  const statisticsField = `${dateString}:  Level: ${level}, Page: ${page} - I don't know: ${resultSentences.dontKnow.length}; I know: ${resultSentences.know.length}`;
+  console.log(statisticsField)
+  activeUser.statistics.push(statisticsField);
+  console.log(activeUser)
+}
+
+const btnResultHandler = () => {
+  const pageNow = parseFloat(activeUser.lastPage);
+  const levelNow = parseFloat(activeUser.lastLevel);
+  if (levelNow === 6 && pageNow === 60) {
+    return;
   }
 
+  if (pageNow < 60) {
+    activeUser.lastPage = pageNow + 1;
+  } else {
+    activeUser.lastPage = 1;
+    activeUser.lastLevel = levelNow + 1;
+  }
+
+  document.querySelector('.puzzle-container').classList.remove('complited-puzzle');
+  document.querySelector('.btn-result').classList.remove('show');
+  createRoundStatisticLayout();
+  activeUser.imageIndex = activeUser.imageIndex < 150 ? activeUser.imageIndex + 1 : 1;
 }
 
 const addButtonGameHandlers = (data) => {
@@ -157,6 +196,9 @@ const addButtonGameHandlers = (data) => {
     }
     if (event.target.closest('.btn-continue')) {
       btnContinueHandler(data);
+    }
+    if (event.target.closest('.btn-result')) {
+      btnResultHandler();
     }
   }
 }

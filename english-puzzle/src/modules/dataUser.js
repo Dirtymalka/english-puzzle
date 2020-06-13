@@ -1,16 +1,19 @@
-const USER = {
+const USER_DEFAULT = {
   id: '',
+  userName: 'U',
   settings: {
     pronunciation: 'active-icon',
-    picture: '',
+    picture: null,
     autoPronunciation: 'active-icon',
     translation: 'active-icon',
   },
-  lastLevel: '',
-  lastPage: '',
+  lastLevel: '1',
+  lastPage: '1',
   complete: [ { level: '', page: '' } ],
-  statistics: [ { time: '', level: '', page: '', dontKnow: '', know: '' } ]
+  statistics: [ ],
+  imageIndex: 1
 }
 
+const USERS_DEFAULT = [];
 
-export default USER;
+export { USER_DEFAULT, USERS_DEFAULT };

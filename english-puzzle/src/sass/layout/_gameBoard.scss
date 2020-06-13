@@ -4,9 +4,6 @@
   align-items: center;
   box-sizing: content-box;
   .speaker {
-    background-image: url(/img/dynamic-icon.svg);
-    width: 40px;
-    height: 40px;
     margin-bottom: 20px;
     visibility: hidden;
     &:hover {
@@ -68,6 +65,7 @@
   text-align: center;
   // background: #6b7373;
   font-size: 2rem;
+  border-radius: 3px;
   &.not-image {
     background: #6b7373 !important;
   }

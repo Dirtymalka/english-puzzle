@@ -9,12 +9,16 @@ import { createGameBoard } from './createGameBoard';
 import { INDEX_FIRST_SENTENCE, LEVEL, PAGE } from '../constants';
 import { addButtonGameHandlers } from './buttonGamesHandlers';
 
+import { activeUser } from '../authorization/authorization';
+
 const getWords = () => {
   document.querySelector('.main').innerHTML = '';
-  const level = document.querySelector('.selectbox-levels').textContent;
-  const page = document.querySelector('.selectbox-pages').textContent;
-  localStorage.setItem(LEVEL, level);
-  localStorage.setItem(PAGE, page);
+
+  document.querySelector('.selectbox-levels').textContent = activeUser.lastLevel;
+  document.querySelector('.selectbox-pages').textContent = activeUser.lastPage;
+  const level = activeUser.lastLevel;
+  const page = activeUser.lastPage;
+
 
   const levelData = {
     '1': book1,
@@ -25,16 +29,11 @@ const getWords = () => {
     '6': book6,
   }
 
-  // const url = `https://afternoon-falls-25894.herokuapp.com/words?page=${page}&group=${level}`;
-  // const idWord = (levelData[level].length * (parseFloat(level) - 1) + parseFloat(page) * 10) - 10;
-
   const idWord = (parseFloat(page) * 10) - 10;
 
   const dataForOneGame = levelData[level].slice(idWord, idWord + 10);
   const filterDataForOneGame = dataForOneGame.map(dataFilter);
   createGameBoard(filterDataForOneGame);
-  // const filterDataForOneGame = dataFilter(dataForOneGame);
-  // addPuzzlesClickHandler(filterDataForOneGame);
   addButtonGameHandlers(filterDataForOneGame);
 }
 

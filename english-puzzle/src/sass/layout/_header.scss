@@ -34,5 +34,17 @@
         display: block;
       }
     }
+    .btn-statistic {
+      position: absolute;
+      top: 6px;
+      left: -188px;
+      width: 73px;
+      height: 38px;
+      transition: all .5s ease-out;
+      display: none;
+      &.show {
+        display: block;
+      }
+    }
   }
 }

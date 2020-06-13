@@ -1,38 +1,34 @@
 import '../css/style.css';
 import '../css/style.scss';
 
-import { Authorization } from '../modules/autorization/authorization';
-import { btnSignUpHandler } from '../modules/autorization/registration';
-import { createAuthorizationLayout, createStartPage } from '../modules/autorization/createAuthorizationLayout';
-import { btnSignInHandler } from '../modules/autorization/authorization';
+import { createAuthorizationLayout, createStartPage } from '../modules/authorization/createAuthorizationLayout';
 
-import { btnStartHandler } from '../modules/autorization/start';
-
-import { USER_ID, TOKEN } from '../modules/constants';
+import { USER_ID, TOKEN, USERS } from '../modules/constants';
+import { users, activeUser, loginUser, notLogin } from '../modules/authorization/authorization';
 
 
+// users = [];
+// const checking = users[users.length - 1];
+// console.log(activeUser)
+// activeUser = users[users.length - 1];
 
-
-
-const uSerId = localStorage.getItem(USER_ID);
+// const userId = activeUser.id;
+// console.log(users[users.length - 1])
 
 const init = () => {
-  if (uSerId) {
+  if (notLogin()) {
+    // notLogin();
     createStartPage();
     return;
   }
-
   createAuthorizationLayout();
-
-
-
 }
 
 init();
 
-
-
-
+window.addEventListener("unload", () => {
+  localStorage.setItem(USERS ,JSON.stringify(users));
+});
 
 
 

@@ -1,0 +1,10 @@
+.speaker {
+  background-image: url(/img/dynamic-icon.svg);
+  width: 40px;
+  height: 40px;
+  &:hover {
+    cursor: pointer;
+    background-color: hsla(0,0%,100%,.39);
+    border-radius: 50%;
+  }
+}

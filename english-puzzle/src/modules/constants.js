@@ -16,3 +16,5 @@ export const PICTURE_CLASS = 'picture-class';
 export const ICON_CLASS_ACTIVE = 'active-icon';
 
 export const USER_NAME = 'user-name';
+
+export const USERS = 'users';

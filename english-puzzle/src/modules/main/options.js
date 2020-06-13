@@ -25,7 +25,6 @@ const addHandlersOnOptionMenu = () => {
     option.addEventListener("click", (e) => {
       try {
         e.stopPropagation();
-        // console.log(document.querySelector('.selectbox__display--active').innerHTML)
         const label = option.querySelector("label");
         document.querySelector('.selectbox__display--active').innerHTML = label.innerHTML;
         document.querySelector('.selectbox--active').setAttribute("data-option", label.getAttribute("data-value"));

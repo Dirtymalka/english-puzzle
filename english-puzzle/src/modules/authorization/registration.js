@@ -1,27 +1,3 @@
-// class Registration {
-//   constructor() {
-//     this.user = document.querySelector('#user');
-//     this.e_mail = document.querySelector('#e-mail');
-//     this.password = document.querySelector('#pass');
-//     this.btnSignUp = document.querySelector('.btn-sign-up');
-//   }
-
-//   init() {
-//     this.btnSignUp.onclick = btnSignUpHandler;
-//   }
-
-//   btnSignUpHandler {
-
-//   }
-// }
-
-
-// const user = document.querySelector('#user');
-// const e_mail = document.querySelector('#e-mail');
-// const password = document.querySelector('#pass');
-// const btnSignUp = document.querySelector('.btn-sign-up');
-
-
 import { createStartPage } from './createAuthorizationLayout';
 import { loginUser } from './authorization';
 import { USER_NAME } from '../constants';
@@ -45,12 +21,12 @@ const btnSignUpHandler = () => {
     "email": eMail,
     "password": password
   }
-  createUser(user);
+  createUser(user, userName);
 }
 
 
 
-const createUser = async user => {
+const createUser = async (user, userName) => {
   const url = 'https://afternoon-falls-25894.herokuapp.com/users';
   try {
     const rawResponse = await fetch(url, {
@@ -63,7 +39,7 @@ const createUser = async user => {
     });
     const content = await rawResponse.json();
 
-    await loginUser(user);
+    await loginUser(user, userName);
 
     console.log(content);
   } catch (error) {
