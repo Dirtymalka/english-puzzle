@@ -75,6 +75,10 @@ a{color:inherit;text-decoration:none}
 	padding:15px 20px;
 	border-radius:25px;
 	background:rgba(255,255,255,.1);
+	margin-left: 0;
+}
+.login-form .group .button:hover {
+	background:#05378de5;
 }
 .login-form .group input[data-type="password"]{
 	text-security:circle;
@@ -141,4 +145,10 @@ a{color:inherit;text-decoration:none}
 }
 .foot-lnk{
 	text-align:center;
+}
+
+#e-mail-for-sign-in, #pass-for-sign-in, #e-mail-for-sign-up, #pass-for-sign-up, #user-name {
+	&.error {
+		box-shadow: 0 0 3rem 0 rgba(226,31,31,.87);
+	}
 }

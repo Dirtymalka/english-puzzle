@@ -9,8 +9,8 @@ const USER_DEFAULT = {
   },
   lastLevel: '1',
   lastPage: '1',
-  complete: [ { level: '', page: '' } ],
-  statistics: [ ],
+  complete: [],
+  statistics: [],
   imageIndex: 1
 }
 

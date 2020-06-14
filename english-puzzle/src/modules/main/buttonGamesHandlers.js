@@ -1,12 +1,14 @@
-import { NUMBER_OF_SENTENCE, WIDTH_OF_GAME_BOARD, LEVEL, PAGE } from '../constants';
-import { createPuzzleElement, createPuzzles, mixWords, randomInteger, mixPuzzlesAndAppend } from './createGameBoard';
+/* eslint import/no-cycle: [0 ,{ maxDepth: 4 }] */
+/* eslint no-use-before-define: 0 */
+/* eslint-disable import/prefer-default-export */
+/* eslint no-param-reassign: "error" */
+
+import { NUMBER_OF_SENTENCE } from '../constants';
+import { createPuzzles, mixPuzzlesAndAppend } from './createGameBoard';
 import { getWords } from './puzzle';
 import { speakerHandler } from './speaker';
-
-// import USER from '../dataUser';
 import resultSentences from '../statistics/dataStatistics'
 import { createRoundStatisticLayout } from '../statistics/roundStatistic';
-
 import { activeUser } from '../authorization/authorization';
 
 
@@ -18,7 +20,6 @@ const btnCheckHandler = (data) => {
     word.classList.remove('un-correct-word');
   });
   const sentenceContainer = document.querySelector(`#part-${parseFloat(numberOfSentence) + 1}`);
-  console.log(parseFloat(numberOfSentence) + 1);
   sentenceContainer.querySelectorAll('.completed').forEach((word, index) => {
     if (word.textContent === checkSentence[index]) {
       word.classList.add('correct-word');
@@ -26,6 +27,7 @@ const btnCheckHandler = (data) => {
     }
     word.classList.add('un-correct-word');
   })
+
   if (document.querySelectorAll('.correct-word').length === checkSentence.length) {
     document.querySelector('.btn-check').classList.remove('show');
     document.querySelector('.btn-continue').classList.add('show');
@@ -46,7 +48,6 @@ const btnCheckHandler = (data) => {
     });
 
     resultSentences.know.push({ sentence: Array.from(document.querySelectorAll('.correct-word')).map((word) => word.textContent).join(' '), speaker: data[numberOfSentence].audioText });
-    console.log(resultSentences)
   } else {
     document.querySelector('.btn-not-know').classList.add('show');
   }
@@ -161,9 +162,9 @@ const addStatisticsData = (page, level) => {
   const dateString = date.toLocaleString('en', options);
 
   const statisticsField = `${dateString}:  Level: ${level}, Page: ${page} - I don't know: ${resultSentences.dontKnow.length}; I know: ${resultSentences.know.length}`;
-  console.log(statisticsField)
+  activeUser.complete.push( { level, page } );
+  document.querySelector('.option-container-pages').children[page-1].classList.add('completed-page');
   activeUser.statistics.push(statisticsField);
-  console.log(activeUser)
 }
 
 const btnResultHandler = () => {

@@ -1,3 +1,7 @@
+/* eslint import/no-cycle: [0 ,{ maxDepth: 4 }] */
+/* eslint no-use-before-define: 0 */
+/* eslint-disable import/prefer-default-export */
+
 import book1 from '../data/book1';
 import book2 from '../data/book2';
 import book3 from '../data/book3';
@@ -5,10 +9,7 @@ import book4 from '../data/book4';
 import book5 from '../data/book5';
 import book6 from '../data/book6';
 import { createGameBoard } from './createGameBoard';
-// import { addPuzzlesClickHandler } from './puzzlesClickHandler';
-import { INDEX_FIRST_SENTENCE, LEVEL, PAGE } from '../constants';
 import { addButtonGameHandlers } from './buttonGamesHandlers';
-
 import { activeUser } from '../authorization/authorization';
 
 const getWords = () => {

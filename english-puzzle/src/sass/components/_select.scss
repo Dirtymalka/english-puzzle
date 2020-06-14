@@ -90,6 +90,11 @@
   left: 0;
   width: 100%;
 }
+.option-container__option {
+  &.completed-page {
+    background: #39877eb8;
+  }
+}
 .option-container__option:hover {
   background-color: var(--select-theme-hover);
 }

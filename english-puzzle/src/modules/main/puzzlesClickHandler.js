@@ -1,19 +1,18 @@
-/* global event, fdescribe */
-/* eslint no-restricted-globals: ["error", "event", "fdescribe"] */
+/* eslint import/no-cycle: [0 ,{ maxDepth: 4 }] */
+/* eslint no-use-before-define: 0 */
+/* eslint-disable import/prefer-default-export */
 /* eslint no-param-reassign: "error" */
-/* eslint no-use-before-define: ["error", { "functions": false }] */
+/* eslint prefer-destructuring: ["error", {VariableDeclarator: {object: false}}] */
 
-import { NUMBER_OF_SENTENCE, WIDTH_OF_GAME_BOARD } from '../constants';
+
+import { NUMBER_OF_SENTENCE } from '../constants';
 
 
 const addPuzzlesClickHandler = (data) => {
   const numberOfSentence = localStorage.getItem(NUMBER_OF_SENTENCE);
-  const puzzles = document.querySelectorAll('.word');
 
   document.querySelectorAll('.word').forEach((puzzle) => {
     puzzle.onmousedown = (event) => {
-      const movingWord = puzzle;
-      const coordinateMovingWord = movingWord.getBoundingClientRect();
       const itemWidth = puzzle.getBoundingClientRect().width;
       const itemHeight = puzzle.getBoundingClientRect().height;
 
@@ -50,7 +49,7 @@ const addPuzzlesClickHandler = (data) => {
         moveAt(event.pageX, event.pageY);
 
         puzzle.hidden = true;
-        let elemBelow = document.elementFromPoint(event.clientX, event.clientY);
+        const elemBelow = document.elementFromPoint(event.clientX, event.clientY);
         puzzle.hidden = false;
 
         if (!elemBelow) return;
@@ -150,7 +149,7 @@ const addPuzzlesClickHandler = (data) => {
   })
 }
 
-const checkSentence = (data) => {
+const checkSentence = () => {
   const puzzleField = document.querySelector('.puzzle-pieces');
   if (!puzzleField.innerHTML) {
     document.querySelector('.btn-check').classList.add('show');

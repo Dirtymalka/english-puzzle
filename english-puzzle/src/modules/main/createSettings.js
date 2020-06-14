@@ -1,7 +1,11 @@
+/* eslint import/no-cycle: [0 ,{ maxDepth: 4 }] */
+/* eslint no-use-before-define: 0 */
+/* eslint-disable import/prefer-default-export */
+
 import { addButtonSelectHandler } from './buttonOptionsHandlers';
 import { addTooltipHandler } from './tooltip';
 import { createHeader } from './createHeader';
-import { addHandlersOnOptionMenu } from './options';
+import { addHandlersOnOptionMenu, choosePagesCompleted } from './options';
 import { activeUser } from '../authorization/authorization';
 
 const createSettingsLayout = () => {const appContainer = document.querySelector('.app-container');
@@ -46,6 +50,7 @@ const createSettingsLayout = () => {const appContainer = document.querySelector(
   createLevels();
   createPages();
   addButtonSelectHandler();
+  choosePagesCompleted();
   addTooltipHandler();
   addStartOptions();
   addHandlersOnOptionMenu();
@@ -81,7 +86,6 @@ const addStartOptions = () => {
   document.querySelector('.pronunciation-icon').classList.add(activeUser.settings.pronunciation);
   document.querySelector('.translation-icon').classList.add(activeUser.settings.translation);
   document.querySelector('.auto-pronunciation-icon').classList.add(activeUser.settings.autoPronunciation);
-  // document.querySelector('.picture-icon').classList.add(activeUser.settings.picture);
 }
 
 export { createSettingsLayout };

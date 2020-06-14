@@ -1,3 +1,9 @@
+/* eslint import/no-cycle: [0 ,{ maxDepth: 4 }] */
+/* eslint no-use-before-define: 0 */
+/* eslint-disable import/prefer-default-export */
+/* eslint no-param-reassign: "error" */
+/* eslint prefer-destructuring: ["error", {VariableDeclarator: {object: false}}] */
+
 const addTooltipHandler = () => {
   let tooltipElem;
 
@@ -27,7 +33,7 @@ const addTooltipHandler = () => {
       tooltipElem.style.top = `${top}px`;
     };
 
-    document.onmouseout = (e) => {
+    document.onmouseout = () => {
       if (tooltipElem) {
         tooltipElem.remove();
         tooltipElem = null;

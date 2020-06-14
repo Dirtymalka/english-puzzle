@@ -66,6 +66,9 @@
   // background: #6b7373;
   font-size: 2rem;
   border-radius: 3px;
+  &.done {
+    border-radius: 0px;
+  }
   &.not-image {
     background: #6b7373 !important;
   }

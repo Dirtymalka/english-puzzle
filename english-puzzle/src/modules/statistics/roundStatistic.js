@@ -1,8 +1,12 @@
+/* eslint import/no-cycle: [0 ,{ maxDepth: 4 }] */
+/* eslint no-use-before-define: 0 */
+/* eslint-disable import/prefer-default-export */
+/* eslint no-param-reassign: "error" */
+/* eslint prefer-destructuring: ["error", {VariableDeclarator: {object: false}}] */
+
 import resultSentences from './dataStatistics';
 import { getWords } from '../main/puzzle';
 import { createSettingsLayout } from '../main/createSettings';
-import { createHeader } from '../main/createHeader';
-import { NUMBER_OF_SENTENCE, WIDTH_OF_GAME_BOARD, LEVEL, PAGE } from '../constants';
 import { activeUser } from '../authorization/authorization';
 import { createStatisticLayout } from './mainStatistic';
 
@@ -52,6 +56,8 @@ const createRoundStatistic = (roundData) => {
 
 const addButtonResultsHandlers = () => {
   document.querySelector('.option-btn-results').onclick = (event) => {
+    resultSentences.dontKnow = [];
+    resultSentences.know = [];
     if (event.target.closest('.btn-continue')) {
       btnContinueHandler();
     }
@@ -62,9 +68,6 @@ const addButtonResultsHandlers = () => {
 }
 
 const btnContinueHandler = () => {
-  resultSentences.dontKnow = [];
-  resultSentences.know = [];
-
   createSettingsLayout();
   getWords();
 }

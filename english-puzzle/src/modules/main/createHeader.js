@@ -1,4 +1,9 @@
-import { USER_NAME } from '../constants';
+/* eslint import/no-cycle: [0 ,{ maxDepth: 4 }] */
+/* eslint no-use-before-define: 0 */
+/* eslint-disable import/prefer-default-export */
+/* eslint no-param-reassign: "error" */
+/* eslint prefer-destructuring: ["error", {VariableDeclarator: {object: false}}] */
+
 import { addLogOutHandler } from './logOut';
 import { activeUser } from '../authorization/authorization'
 

@@ -1,8 +1,13 @@
-import { WIDTH_OF_GAME_BOARD, INDEX_FIRST_SENTENCE, NUMBER_OF_SENTENCE, PRONUNCIATION_CLASS, TRANSLATION_CLASS, AUTO_PRONUNCIATION_CLASS, PICTURE_CLASS, ICON_CLASS_ACTIVE } from '../constants';
+/* eslint import/no-cycle: [0 ,{ maxDepth: 4 }] */
+/* eslint no-use-before-define: 0 */
+/* eslint-disable import/prefer-default-export */
+/* eslint no-param-reassign: "error" */
+/* eslint prefer-destructuring: ["error", {VariableDeclarator: {object: false}}] */
+
+import { WIDTH_OF_GAME_BOARD, INDEX_FIRST_SENTENCE, NUMBER_OF_SENTENCE, ICON_CLASS_ACTIVE } from '../constants';
 import { addPuzzlesClickHandler } from './puzzlesClickHandler';
 import { addButtonOptionHandlers, addButtonSpeakHandler } from './buttonOptionsHandlers';
 import { speakerHandler } from './speaker';
-
 import { activeUser } from '../authorization/authorization';
 
 const createGameBoard = (wordData) => {
@@ -57,33 +62,9 @@ const addHints = () => {
       word.classList.remove('not-image');
     })
   }
-
-
-
-
-
-  // if (localStorage.getItem(PRONUNCIATION_CLASS) === ICON_CLASS_ACTIVE) {
-  //   document.querySelector('.speaker').classList.add('visible');
-  //   document.querySelector('.pronunciation-icon').classList.add('active-icon');
-  // } else {
-  //   document.querySelector('.speaker').classList.remove('visible');
-  // }
-  // if (localStorage.getItem(TRANSLATION_CLASS) === ICON_CLASS_ACTIVE) {
-  //   document.querySelector('.sentence-text').classList.add('visible');
-  //   document.querySelector('.translation-icon').classList.add('active-icon');
-  // } else {
-  //   document.querySelector('.sentence-text').classList.remove('visible');
-  // }
-  // if (localStorage.getItem(PICTURE_CLASS) === ICON_CLASS_ACTIVE) {
-  //   document.querySelector('.picture-icon').classList.add(ICON_CLASS_ACTIVE);
-  //   document.querySelectorAll('.word').forEach((word) => {
-  //     word.classList.remove('not-image');
-  //   })
-  // }
 }
 
 const createPuzzles = (data, index) => {
-  console.log('data for create:', data)
   localStorage.setItem(NUMBER_OF_SENTENCE, index);
   const { audioText } = data[index];
   const puzzles = data[index].text.split(' ');
@@ -94,19 +75,12 @@ const createPuzzles = (data, index) => {
     const wordElementWithBackground = addBackgroundForElements(wordElement, letterWidth, elementPuzzles)
     elementPuzzles.push(wordElementWithBackground);
   });
-  console.log(elementPuzzles)
   document.querySelector('.sentence-text').textContent = data[index].textTranslate;
-
-  // if (localStorage.getItem(AUTO_PRONUNCIATION_CLASS) === ICON_CLASS_ACTIVE) {
-  //   document.querySelector('.auto-pronunciation-icon').classList.add('active-icon');
-  //   setTimeout(() => speakerHandler(audioText), 500)
-  // }
 
   if (activeUser.settings.autoPronunciation === ICON_CLASS_ACTIVE) {
     document.querySelector('.auto-pronunciation-icon').classList.add('active-icon');
     setTimeout(() => speakerHandler(audioText), 500)
   }
-
   return elementPuzzles;
 }
 
@@ -122,7 +96,6 @@ const createPuzzleElement = (word, letterWidth) => {
   wordElement.className = 'word not-image';
   wordElement.textContent = word;
   wordElement.style.width = `${word.length * letterWidth}px`;
-
   return wordElement;
 }
 
@@ -132,7 +105,7 @@ const addBackgroundForElements = (wordElement, letterWidth, elements) => {
   const heightOfString = getComputedStyle(document.querySelector('.puzzle-pieces')).height;
   const coordY = `${parseFloat(heightOfString) * parseFloat(numberOfSentence)}px`;
   const coordX = elements.reduce((sum, item) => sum + parseFloat(item.style.width), 0);
-  wordElement.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(${url})`;
+  wordElement.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${url})`;
   wordElement.style.backgroundPosition = `-${coordX}px -${coordY}`;
   wordElement.style.backgroundSize = '860px 400px';
   wordElement.style.backgroundRepeat = 'no-repeat';
@@ -141,8 +114,6 @@ const addBackgroundForElements = (wordElement, letterWidth, elements) => {
 
 const addImageUrl = () => {
   const imageIndex = activeUser.imageIndex;
-  // activeUser.imageIndex = activeUser.imageIndex < 150 ? activeUser.imageIndex + 1 : 1;
-
   const url = `/img/pictures/${imageIndex}.jpg`;
   return url;
 }

@@ -1,3 +1,6 @@
+/* eslint import/no-cycle: [0 ,{ maxDepth: 4 }] */
+/* eslint no-use-before-define: 0 */
+
 import { btnStartHandler } from './start';
 import { btnSignInHandler } from './authorization';
 import { btnSignUpHandler } from './registration';
@@ -30,7 +33,7 @@ const createAuthorizationLayout = () => {
               <div class="sign-up-htm">
                   <div class="group">
 					<label for="user-name" class="label">Username</label>
-					<input id="user-name" type="text" class="input" required>
+					<input id="user-name" type="text" class="input" required placeholder="Your Name">
 				</div>
                   <div class="group">
                       <label for="e-mail-for-sign-up" class="label">Email Address</label>
